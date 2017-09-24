@@ -11,8 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.chootdev.csnackbar.Duration;
 import com.chootdev.csnackbar.Snackbar;
@@ -26,6 +29,7 @@ import com.orhanobut.logger.Logger;
 import net.rajit.restaurent.R;
 import net.rajit.restaurent.adapters.OrderAdapter;
 import net.rajit.restaurent.models.Order;
+import net.rajit.restaurent.models.Table;
 import net.rajit.restaurent.utils.Datas;
 import net.rajit.restaurent.utils.Geson;
 import net.rajit.restaurent.utils.Netcheker;
@@ -35,6 +39,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,12 +51,10 @@ public class Home extends AppCompatActivity {
 
     @BindView(R.id.ordersList)
     ListView ordersList;
-    @BindView(R.id.txtTable)
-    EditText txtTable;
-    @BindView(R.id.txtMenuId)
-    EditText txtMenuId;
-    @BindView(R.id.txtQuantity)
-    EditText txtQuantity;
+
+
+    @BindView(R.id.spnrTable)
+    Spinner tableSpinner;
 
 
     public static ArrayList<Order> orders;
@@ -61,14 +64,11 @@ public class Home extends AppCompatActivity {
     ProgressDialog dialog;
 
 
-    private boolean isMenuInlist(String menuid)
-    {
-        for(int i = 0; i<orders.size(); i++)
-        {
+    private boolean isMenuInlist(String menuid) {
+        for (int i = 0; i < orders.size(); i++) {
             Order o = orders.get(i);
             Logger.d(o.getMenu_id());
-            if(o.getMenuItem().getCode().equals(menuid))
-            {
+            if (o.getMenuItem().getCode().equals(menuid)) {
                 return true;
             }
         }
@@ -114,30 +114,27 @@ public class Home extends AppCompatActivity {
         ordersList.setAdapter(adapter);
         client = new AsyncHttpClient();
         client.addHeader("authorization", "Bearer " + Datas.getAuthorizationKey(this));
+        getTables();
     }
 
-    @OnClick(R.id.btnAdd)
+    /***
     public void addToOrder() {
-        if(!Netcheker.isNetworkAvailable(this))
-        {
+        if (!Netcheker.isNetworkAvailable(this)) {
             showSnackbar("No internet connection!", Type.ERROR);
             return;
         }
 
         String menuid = txtMenuId.getText().toString().trim();
         final String quantity = txtQuantity.getText().toString().trim();
-        if(TextUtils.isEmpty(menuid))
-        {
+        if (TextUtils.isEmpty(menuid)) {
             txtMenuId.setError("Menu ID can't be blank!");
             return;
         }
-        if(TextUtils.isEmpty(quantity))
-        {
+        if (TextUtils.isEmpty(quantity)) {
             txtQuantity.setError("Quantity can't be blank!");
             return;
         }
-        if(isMenuInlist(menuid))
-        {
+        if (isMenuInlist(menuid)) {
             showSnackbar("Menu already exists!", Type.ERROR);
             return;
         }
@@ -156,8 +153,7 @@ public class Home extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(new String(responseBody));
                     int status = obj.getInt("status");
-                    if(status == 0)
-                    {
+                    if (status == 0) {
                         showSnackbar(obj.getString("msg"), Type.ERROR);
                         dialog.dismiss();
                         return;
@@ -188,21 +184,94 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+     ***/
 
-    private void showSnackbar(String msg, Type t)
+    private void getTables() {
+        client.get(this, URLS.GET_ALL_TABLES, new AsyncHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                dialog.show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = new String(responseBody);
+                Table[] tables;
+                tables = Geson.g().fromJson(response, Table[].class);
+                List<String> tablesList = new ArrayList<String>();
+                for (int i = 0; i < tables.length; i++) {
+                    tablesList.add(tables[i].getCode());
+                }
+                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(Home.this,
+                        android.R.layout.simple_list_item_1,
+                        tablesList
+                );
+                tableSpinner.setAdapter(spinnerAdapter);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+    public void openAddToMenu(View v)
     {
-        Snackbar.with(Home.this,null)
+        View view = getLayoutInflater().inflate(R.layout.add_menu, null);
+        AlertDialog.Builder addToMenuDialog = new AlertDialog.Builder(
+                this);
+        addToMenuDialog.setView(view);
+        Spinner spnrCategories = (Spinner) view.findViewById(R.id.spnrCategory);
+        getAndSetCategoriesSpinner(spnrCategories);
+    }
+
+    private void getAndSetCategoriesSpinner(Spinner spnrCategories)
+    {
+        client.get(Home.this, URLS.ALL_CATEGORIES, new AsyncHttpResponseHandler() {
+            @Override
+            public void onStart() {
+                super.onStart();
+                dialog.show();
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                String response = new String(responseBody);
+                Table[] tables;
+                tables = Geson.g().fromJson(response, Table[].class);
+                List<String> tablesList = new ArrayList<String>();
+                for (int i = 0; i < tables.length; i++) {
+                    tablesList.add(tables[i].getCode());
+                }
+                ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(Home.this,
+                        android.R.layout.simple_list_item_1,
+                        tablesList
+                );
+                tableSpinner.setAdapter(spinnerAdapter);
+                dialog.dismiss();
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+
+            }
+        });
+    }
+
+    private void showSnackbar(String msg, Type t) {
+        Snackbar.with(Home.this, null)
                 .type(t)
                 .message(msg)
                 .duration(Duration.LONG)
                 .show();
     }
+    /***
 
     @OnClick(R.id.btnConfirm)
-    public void confirmOrder()
-    {
-        if(orders.size() == 0)
-        {
+    public void confirmOrder() {
+        if (orders.size() == 0) {
             showSnackbar("Add some orders!", Type.ERROR);
             return;
         }
@@ -218,31 +287,29 @@ public class Home extends AppCompatActivity {
                 }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               dialog.dismiss();
+                dialog.dismiss();
             }
         }).show();
         //Prepare Client
 
     }
+    ***/
 
-    private void submitTheOrders()
-    {
-        if(!Netcheker.isNetworkAvailable(this))
-        {
+    /***
+    private void submitTheOrders() {
+        if (!Netcheker.isNetworkAvailable(this)) {
             showSnackbar("No internet connection!", Type.ERROR);
             return;
         }
         String tablecode = txtTable.getText().toString();
-        if(TextUtils.isEmpty(tablecode))
-        {
+        if (TextUtils.isEmpty(tablecode)) {
             txtTable.setError("Table code can't be empty!");
             return;
         }
         RequestParams params = new RequestParams();
         params.put("table_code", tablecode);
 
-        for(int i = 0; i < orders.size(); i++)
-        {
+        for (int i = 0; i < orders.size(); i++) {
             Order currOrder = orders.get(i);
             params.put("items[" + i + "][menu_id]", currOrder.getMenu_id());
             params.put("items[" + i + "][quantity]", currOrder.getQuantity());
@@ -263,9 +330,7 @@ public class Home extends AppCompatActivity {
                     JSONObject obj = new JSONObject(new String(responseBody));
                     order_id = obj.getJSONObject("data").getString("order_id");
 
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
 
                     e.printStackTrace();
                 }
@@ -288,10 +353,7 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-
-
-
-
+     ***/
 
 
 }

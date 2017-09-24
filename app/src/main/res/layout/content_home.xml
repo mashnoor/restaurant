@@ -17,28 +17,20 @@
         android:id="@+id/textView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="0dp"
-        android:layout_marginStart="0dp"
         android:layout_marginTop="8dp"
         android:fontFamily="sans-serif-thin"
         android:text="Place an Order"
         android:textSize="20sp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+    <Spinner
+        android:id="@+id/spnrTable"
 
-
-    <EditText
-        android:id="@+id/txtTable"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-
-        android:layout_marginLeft="16dp"
-
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:hint="Enter Table No"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        android:layout_width="348dp"
+        android:layout_height="wrap_content"/>
+
 
 
     <ListView
@@ -53,7 +45,7 @@
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTable" />
+        app:layout_constraintTop_toBottomOf="@+id/spnrTable" />
 
 
     <com.beardedhen.androidbootstrap.BootstrapButton
@@ -73,7 +65,9 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:roundedCorners="true"
-        app:showOutline="false" />
+        app:showOutline="false"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
 
 
     <LinearLayout
@@ -89,34 +83,15 @@
         android:weightSum="3"
         app:layout_constraintBottom_toTopOf="@+id/btnConfirm"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent">
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
 
-        <EditText
-            android:id="@+id/txtMenuId"
+        <Button
+            android:onClick="openAddToMenu"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Enter Menu ID"
-            android:inputType="number" />
-
-
-        <EditText
-            android:id="@+id/txtQuantity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:hint="Enter Quantity"
-            android:inputType="number" />
-
-        <com.beardedhen.androidbootstrap.BootstrapButton
-            android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Add"
-            app:bootstrapBrand="info"
-            app:bootstrapSize="md"
-            app:buttonMode="regular"
-            app:roundedCorners="true"
-            app:showOutline="false" />
-
+            android:text="Add New Item" />
 
     </LinearLayout>
 
