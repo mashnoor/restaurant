@@ -32,6 +32,13 @@
         <activity
             android:name=".activities.ConfirmActivity"
             android:label="@string/title_activity_confirm"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".activities.WelcomeActivity" />
+        <activity android:name=".activities.TableActivity" />
+        <activity android:name=".activities.CategoryActivity" />
+        <activity
+            android:name=".activities.MenuActivity"
+            android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

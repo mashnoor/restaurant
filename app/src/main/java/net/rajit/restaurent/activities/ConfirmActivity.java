@@ -1,17 +1,12 @@
 package net.rajit.restaurent.activities;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.chootdev.csnackbar.Duration;
-import com.chootdev.csnackbar.Type;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -64,7 +59,7 @@ public class ConfirmActivity extends AppCompatActivity {
                 }
                 catch (Exception e)
                 {
-                    showSnackbar("Some Error occured!", Type.ERROR);
+                    showToast("Some error Occured");
                 }
                 dialog.dismiss();
 
@@ -72,7 +67,7 @@ public class ConfirmActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                showSnackbar("Some error Occured", Type.ERROR);
+                showToast("Some error Occured");
                 finish();
 
             }
@@ -87,13 +82,9 @@ public class ConfirmActivity extends AppCompatActivity {
 
         finish();
     }
-    private void showSnackbar(String msg, Type t)
+    private void showToast(String msg)
     {
-        com.chootdev.csnackbar.Snackbar.with(ConfirmActivity.this,null)
-                .type(t)
-                .message(msg)
-                .duration(Duration.LONG)
-                .show();
+        Toast.makeText(ConfirmActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 
 }

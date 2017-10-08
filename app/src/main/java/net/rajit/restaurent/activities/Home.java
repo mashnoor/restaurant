@@ -1,28 +1,22 @@
 package net.rajit.restaurent.activities;
 
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import com.chootdev.csnackbar.Duration;
-import com.chootdev.csnackbar.Snackbar;
-import com.chootdev.csnackbar.Type;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
 import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
@@ -32,18 +26,13 @@ import net.rajit.restaurent.models.Order;
 import net.rajit.restaurent.models.Table;
 import net.rajit.restaurent.utils.Datas;
 import net.rajit.restaurent.utils.Geson;
-import net.rajit.restaurent.utils.Netcheker;
 import net.rajit.restaurent.utils.URLS;
 
-import org.json.JSONObject;
-
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import cz.msebera.android.httpclient.Header;
 
 public class Home extends AppCompatActivity {
@@ -118,72 +107,69 @@ public class Home extends AppCompatActivity {
     }
 
     /***
-    public void addToOrder() {
-        if (!Netcheker.isNetworkAvailable(this)) {
-            showSnackbar("No internet connection!", Type.ERROR);
-            return;
-        }
+     public void addToOrder() {
+     if (!Netcheker.isNetworkAvailable(this)) {
+     showSnackbar("No internet connection!", Type.ERROR);
+     return;
+     }
 
-        String menuid = txtMenuId.getText().toString().trim();
-        final String quantity = txtQuantity.getText().toString().trim();
-        if (TextUtils.isEmpty(menuid)) {
-            txtMenuId.setError("Menu ID can't be blank!");
-            return;
-        }
-        if (TextUtils.isEmpty(quantity)) {
-            txtQuantity.setError("Quantity can't be blank!");
-            return;
-        }
-        if (isMenuInlist(menuid)) {
-            showSnackbar("Menu already exists!", Type.ERROR);
-            return;
-        }
-
-
-        client.get(URLS.getMenuUrl(menuid), new AsyncHttpResponseHandler() {
-            @Override
-            public void onStart() {
-                dialog.setMessage("Getting menu from server...");
-                dialog.show();
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Logger.d(new String(responseBody));
-                try {
-                    JSONObject obj = new JSONObject(new String(responseBody));
-                    int status = obj.getInt("status");
-                    if (status == 0) {
-                        showSnackbar(obj.getString("msg"), Type.ERROR);
-                        dialog.dismiss();
-                        return;
-                    }
-                    String menu_json = obj.getJSONObject("data").getString("item");
-
-                    net.rajit.restaurent.models.MenuItem menuItem = Geson.g().fromJson(menu_json, net.rajit.restaurent.models.MenuItem.class);
-                    Order order = new Order(menuItem.getMenu_id(), quantity, menuItem);
-
-                    orders.add(order);
-                    adapter.notifyDataSetChanged();
-                    dialog.dismiss();
-
-                    showSnackbar("Order added successfully", Type.SUCCESS);
-                    txtMenuId.setText("");
-                    txtQuantity.setText("");
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+     String menuid = txtMenuId.getText().toString().trim();
+     final String quantity = txtQuantity.getText().toString().trim();
+     if (TextUtils.isEmpty(menuid)) {
+     txtMenuId.setError("Menu ID can't be blank!");
+     return;
+     }
+     if (TextUtils.isEmpty(quantity)) {
+     txtQuantity.setError("Quantity can't be blank!");
+     return;
+     }
+     if (isMenuInlist(menuid)) {
+     showSnackbar("Menu already exists!", Type.ERROR);
+     return;
+     }
 
 
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Logger.d(new String(responseBody));
-                dialog.dismiss();
-            }
-        });
+     client.get(URLS.getMenuUrl(menuid), new AsyncHttpResponseHandler() {
+    @Override public void onStart() {
+    dialog.setMessage("Getting menu from server...");
+    dialog.show();
     }
+
+    @Override public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+    Logger.d(new String(responseBody));
+    try {
+    JSONObject obj = new JSONObject(new String(responseBody));
+    int status = obj.getInt("status");
+    if (status == 0) {
+    showSnackbar(obj.getString("msg"), Type.ERROR);
+    dialog.dismiss();
+    return;
+    }
+    String menu_json = obj.getJSONObject("data").getString("item");
+
+    net.rajit.restaurent.models.MenuItem menuItem = Geson.g().fromJson(menu_json, net.rajit.restaurent.models.MenuItem.class);
+    Order order = new Order(menuItem.getMenu_id(), quantity, menuItem);
+
+    orders.add(order);
+    adapter.notifyDataSetChanged();
+    dialog.dismiss();
+
+    showSnackbar("Order added successfully", Type.SUCCESS);
+    txtMenuId.setText("");
+    txtQuantity.setText("");
+    } catch (Exception e) {
+    e.printStackTrace();
+    }
+
+
+    }
+
+    @Override public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+    Logger.d(new String(responseBody));
+    dialog.dismiss();
+    }
+    });
+     }
      ***/
 
     private void getTables() {
@@ -217,18 +203,10 @@ public class Home extends AppCompatActivity {
             }
         });
     }
-    public void openAddToMenu(View v)
-    {
-        View view = getLayoutInflater().inflate(R.layout.add_menu, null);
-        AlertDialog.Builder addToMenuDialog = new AlertDialog.Builder(
-                this);
-        addToMenuDialog.setView(view);
-        Spinner spnrCategories = (Spinner) view.findViewById(R.id.spnrCategory);
-        getAndSetCategoriesSpinner(spnrCategories);
-    }
 
-    private void getAndSetCategoriesSpinner(Spinner spnrCategories)
-    {
+
+
+    private void getAndSetCategoriesSpinner(Spinner spnrCategories) {
         client.get(Home.this, URLS.ALL_CATEGORIES, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {
@@ -260,99 +238,90 @@ public class Home extends AppCompatActivity {
         });
     }
 
-    private void showSnackbar(String msg, Type t) {
-        Snackbar.with(Home.this, null)
-                .type(t)
-                .message(msg)
-                .duration(Duration.LONG)
-                .show();
+    private void showToast(String msg)
+    {
+        Toast.makeText(Home.this, msg, Toast.LENGTH_LONG).show();
     }
     /***
 
-    @OnClick(R.id.btnConfirm)
-    public void confirmOrder() {
-        if (orders.size() == 0) {
-            showSnackbar("Add some orders!", Type.ERROR);
-            return;
-        }
-        new AlertDialog.Builder(this)
-                .setTitle("Submit Order(s)")
-                .setMessage("Are you sure?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        submitTheOrders();
+     @OnClick(R.id.btnConfirm) public void confirmOrder() {
+     if (orders.size() == 0) {
+     showSnackbar("Add some orders!", Type.ERROR);
+     return;
+     }
+     new AlertDialog.Builder(this)
+     .setTitle("Submit Order(s)")
+     .setMessage("Are you sure?")
+     .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+     @Override public void onClick(DialogInterface dialog, int which) {
+     submitTheOrders();
 
-                    }
-                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-            }
-        }).show();
-        //Prepare Client
+     }
+     }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+     @Override public void onClick(DialogInterface dialog, int which) {
+     dialog.dismiss();
+     }
+     }).show();
+     //Prepare Client
 
-    }
-    ***/
+     }
+     ***/
 
     /***
-    private void submitTheOrders() {
-        if (!Netcheker.isNetworkAvailable(this)) {
-            showSnackbar("No internet connection!", Type.ERROR);
-            return;
-        }
-        String tablecode = txtTable.getText().toString();
-        if (TextUtils.isEmpty(tablecode)) {
-            txtTable.setError("Table code can't be empty!");
-            return;
-        }
-        RequestParams params = new RequestParams();
-        params.put("table_code", tablecode);
+     private void submitTheOrders() {
+     if (!Netcheker.isNetworkAvailable(this)) {
+     showSnackbar("No internet connection!", Type.ERROR);
+     return;
+     }
+     String tablecode = txtTable.getText().toString();
+     if (TextUtils.isEmpty(tablecode)) {
+     txtTable.setError("Table code can't be empty!");
+     return;
+     }
+     RequestParams params = new RequestParams();
+     params.put("table_code", tablecode);
 
-        for (int i = 0; i < orders.size(); i++) {
-            Order currOrder = orders.get(i);
-            params.put("items[" + i + "][menu_id]", currOrder.getMenu_id());
-            params.put("items[" + i + "][quantity]", currOrder.getQuantity());
+     for (int i = 0; i < orders.size(); i++) {
+     Order currOrder = orders.get(i);
+     params.put("items[" + i + "][menu_id]", currOrder.getMenu_id());
+     params.put("items[" + i + "][quantity]", currOrder.getQuantity());
 
-        }
-        client.post(URLS.ORDER_URL, params, new AsyncHttpResponseHandler() {
-            @Override
-            public void onStart() {
-                dialog.setMessage("Submitting order...");
-                dialog.show();
-            }
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Logger.d(new String(responseBody));
-                String order_id = "-1";
-                try {
-                    JSONObject obj = new JSONObject(new String(responseBody));
-                    order_id = obj.getJSONObject("data").getString("order_id");
-
-                } catch (Exception e) {
-
-                    e.printStackTrace();
-                }
-
-                dialog.dismiss();
-                Intent i = new Intent(Home.this, ConfirmActivity.class);
-                i.putExtra("order_id", order_id);
-                orders.clear();
-                adapter.notifyDataSetChanged();
-                txtTable.setText("");
-                startActivity(i);
-
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Logger.d(new String(responseBody));
-                dialog.dismiss();
-            }
-        });
+     }
+     client.post(URLS.ORDER_URL, params, new AsyncHttpResponseHandler() {
+    @Override public void onStart() {
+    dialog.setMessage("Submitting order...");
+    dialog.show();
     }
+
+    @Override public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+    Logger.d(new String(responseBody));
+    String order_id = "-1";
+    try {
+    JSONObject obj = new JSONObject(new String(responseBody));
+    order_id = obj.getJSONObject("data").getString("order_id");
+
+    } catch (Exception e) {
+
+    e.printStackTrace();
+    }
+
+    dialog.dismiss();
+    Intent i = new Intent(Home.this, ConfirmActivity.class);
+    i.putExtra("order_id", order_id);
+    orders.clear();
+    adapter.notifyDataSetChanged();
+    txtTable.setText("");
+    startActivity(i);
+
+
+    }
+
+    @Override public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+    Logger.d(new String(responseBody));
+    dialog.dismiss();
+    }
+    });
+     }
      ***/
 
 

@@ -3,6 +3,13 @@ package net.rajit.restaurent.utils;
 import android.app.Activity;
 import android.content.SharedPreferences;
 
+import com.orhanobut.hawk.Hawk;
+
+import net.rajit.restaurent.models.MenuItem;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static android.content.Context.MODE_PRIVATE;
 
 /**
@@ -27,6 +34,7 @@ public class Datas {
 
 
     }
+
     public static void setAuthorizationKey(Activity activity, String authKey) {
 
         SharedPreferences.Editor editor = activity.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE).edit();
@@ -41,5 +49,13 @@ public class Datas {
         return prefs.getString("auth_key", "null");//"No name defined" is the default value.
 
 
+    }
+
+    public void addToMenus(Activity activity, MenuItem item)
+    {
+        Hawk.init(activity);
+        List<MenuItem> menus = Hawk.get("menus", new ArrayList<MenuItem>());
+        menus.add(item);
+        Hawk.put("menus", menus);
     }
 }

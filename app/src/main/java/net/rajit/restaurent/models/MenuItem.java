@@ -13,6 +13,16 @@ public class MenuItem {
     private String image;
     private int available;
 
+    public MenuItem(int menu_id, String code, String name, String description, String price, String image, int available) {
+        this.menu_id = menu_id;
+        this.code = code;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.image = image;
+        this.available = available;
+    }
+
     public int getMenu_id() {
         return menu_id;
     }

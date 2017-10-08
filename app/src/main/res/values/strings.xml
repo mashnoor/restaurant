@@ -16,4 +16,10 @@
         completions."
     </string>
     <string name="title_activity_confirm">ConfirmActivity</string>
+    <string-array name="demoTable">
+        <item>Table 1 (Cap: 4)</item>
+        <item>Table 2 (Cap: 8)</item>
+        <item>Table 3 (Cap: 10)</item>
+    </string-array>
+    <string name="title_activity_menu">MenuActivity</string>
 </resources>
