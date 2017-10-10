@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import com.orhanobut.hawk.Hawk;
 
 import net.rajit.restaurent.models.MenuItem;
+import net.rajit.restaurent.models.Order;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,11 +52,23 @@ public class Datas {
 
     }
 
-    public void addToMenus(Activity activity, MenuItem item)
+    public static ArrayList<Order> getOrders(Activity activity) {
+        Hawk.init(activity).build();
+        return Hawk.get("orders", new ArrayList<Order>());
+    }
+
+    public static void addToOrders(Activity activity, Order order) {
+        Hawk.init(activity).build();
+        ArrayList<Order> currentOrders = getOrders(activity);
+        currentOrders.add(order);
+        Hawk.put("orders", currentOrders);
+    }
+    public static boolean isAnyPendingOrder(Activity activity)
     {
-        Hawk.init(activity);
-        List<MenuItem> menus = Hawk.get("menus", new ArrayList<MenuItem>());
-        menus.add(item);
-        Hawk.put("menus", menus);
+        return getOrders(activity).size()>0;
+    }
+    public static void clearOrders(Activity activity)
+    {
+        Hawk.delete("orders");
     }
 }

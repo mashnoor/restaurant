@@ -26,7 +26,7 @@ public class OrderAdapter extends ArrayAdapter<Order> {
 
     private Activity activity;
 
-    public OrderAdapter(Activity activity, ArrayList<Order> orders) {
+    public OrderAdapter(Activity activity, List<Order> orders) {
         super(activity, 0, orders);
         this.activity = activity;
     }
