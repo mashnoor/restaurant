@@ -13,7 +13,9 @@ import com.beardedhen.androidbootstrap.api.view.BootstrapTextView;
 
 import net.rajit.restaurent.R;
 import net.rajit.restaurent.activities.Home;
+import net.rajit.restaurent.activities.OrdersActivity;
 import net.rajit.restaurent.models.Order;
+import net.rajit.restaurent.utils.Datas;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,21 +36,22 @@ public class OrderAdapter extends ArrayAdapter<Order> {
 
     @NonNull
     @Override
-    public View getView(int position, View convertView, @NonNull ViewGroup parent) {
+    public View getView(final int position, View convertView, @NonNull ViewGroup parent) {
         View v = convertView;
         if (v == null) {
             v = activity.getLayoutInflater().inflate(R.layout.order_row, parent, false);
         }
 
-        TextView foodName = (TextView) v.findViewById(R.id.txtfood);
-        TextView orderInfo = (TextView) v.findViewById(R.id.txtOrderCosting);
-        BootstrapButton btn = (BootstrapButton) v.findViewById(R.id.btnDel);
+        TextView foodName = v.findViewById(R.id.txtfood);
+        TextView orderInfo = v.findViewById(R.id.txtOrderCosting);
+        BootstrapButton btn = v.findViewById(R.id.btnDel);
         final Order currentOrder = getItem(position);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Home.orders.remove(currentOrder);
-                Home.adapter.notifyDataSetChanged();
+                OrdersActivity.allOrders.remove(currentOrder);
+                Datas.deleteParticularOrder(activity, position);
+                OrdersActivity.adapter.notifyDataSetChanged();
             }
         });
 

@@ -21,6 +21,7 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:entries="@array/demoTable"
+        android:id="@+id/tableList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
     <com.beardedhen.androidbootstrap.BootstrapButton

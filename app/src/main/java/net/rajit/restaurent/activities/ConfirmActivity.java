@@ -1,6 +1,7 @@
 package net.rajit.restaurent.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -81,6 +82,7 @@ public class ConfirmActivity extends AppCompatActivity {
     {
 
         finish();
+        startActivity(new Intent(ConfirmActivity.this, WelcomeActivity.class));
     }
     private void showToast(String msg)
     {

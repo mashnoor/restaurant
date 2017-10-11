@@ -21,24 +21,13 @@
         android:id="@+id/btnPlaceOrder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Place A New Order"
         android:onClick="goPlaceOrder"
+        android:text="Place A New Order"
         app:bootstrapBrand="success"
         app:bootstrapSize="lg"
         app:buttonMode="regular"
         app:roundedCorners="true"
         app:showOutline="false" />
 
-    <com.beardedhen.androidbootstrap.BootstrapButton
-        android:id="@+id/btnViewPreviousOrder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text=" Prev.Order Status"
-        app:bootstrapBrand="success"
-        app:bootstrapSize="lg"
-        app:buttonMode="regular"
-        app:roundedCorners="true"
-        app:showOutline="false" />
 
 </LinearLayout>

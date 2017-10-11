@@ -32,7 +32,7 @@
             android:text="Confirm Order"
             android:layout_gravity="center"
             android:gravity="center"
-
+            android:onClick="confirmOrder"
             app:bootstrapBrand="success"
             app:bootstrapSize="md"
             app:buttonMode="regular"

@@ -2,6 +2,7 @@ package net.rajit.restaurent.utils;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.orhanobut.hawk.Hawk;
 
@@ -63,12 +64,34 @@ public class Datas {
         currentOrders.add(order);
         Hawk.put("orders", currentOrders);
     }
-    public static boolean isAnyPendingOrder(Activity activity)
-    {
-        return getOrders(activity).size()>0;
+
+    public static boolean isAnyPendingOrder(Activity activity) {
+        return getOrders(activity).size() > 0;
     }
-    public static void clearOrders(Activity activity)
-    {
+
+    public static void clearOrders(Activity activity) {
+        Hawk.init(activity).build();
         Hawk.delete("orders");
+    }
+
+    public static void setTableCode(Activity activity, String code) {
+        Hawk.init(activity).build();
+        Hawk.put("table_code", code);
+    }
+
+    public static void deleteParticularOrder(Activity activity, int id) {
+        Hawk.init(activity).build();
+
+        ArrayList<Order> orders = getOrders(activity);
+
+        orders.remove(id);
+
+        clearOrders(activity);
+        Hawk.put("orders", orders);
+    }
+
+    public static String getTableCode(Activity activity) {
+        Hawk.init(activity).build();
+        return Hawk.get("table_code", "null");
     }
 }

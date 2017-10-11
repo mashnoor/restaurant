@@ -2,6 +2,7 @@ package net.rajit.restaurent.activities;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
@@ -110,8 +113,15 @@ public class MenuActivity extends AppCompatActivity {
 
                         final View workingview = inflater.inflate(
                                 R.layout.add_qty, null);
-                        final EditText quantity = workingview.findViewById(R.id.etQty);
+
                         addQuantity.setView(workingview);
+                        final EditText quantity = workingview.findViewById(R.id.etQty);
+                        quantity.requestFocus();
+
+                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+
+
                         addQuantity.setPositiveButton("Set", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
