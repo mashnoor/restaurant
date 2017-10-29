@@ -205,7 +205,6 @@ public class Home extends AppCompatActivity {
     }
 
 
-
     private void getAndSetCategoriesSpinner(Spinner spnrCategories) {
         client.get(Home.this, URLS.ALL_CATEGORIES, new AsyncHttpResponseHandler() {
             @Override
@@ -238,8 +237,7 @@ public class Home extends AppCompatActivity {
         });
     }
 
-    private void showToast(String msg)
-    {
+    private void showToast(String msg) {
         Toast.makeText(Home.this, msg, Toast.LENGTH_LONG).show();
     }
     /***

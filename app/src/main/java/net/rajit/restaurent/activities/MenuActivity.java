@@ -6,14 +6,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
@@ -24,9 +20,7 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import net.rajit.restaurent.R;
-import net.rajit.restaurent.adapters.CategoryAdapter;
 import net.rajit.restaurent.adapters.MenuAdapter;
-import net.rajit.restaurent.models.Category;
 import net.rajit.restaurent.models.MenuItem;
 import net.rajit.restaurent.models.Order;
 import net.rajit.restaurent.utils.Datas;
@@ -51,8 +45,7 @@ public class MenuActivity extends AppCompatActivity {
     MenuItem[] menuItems;
     ProgressDialog dialog;
 
-    private void showToast(String msg)
-    {
+    private void showToast(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
 
@@ -67,12 +60,9 @@ public class MenuActivity extends AppCompatActivity {
         getMenus();
 
 
-
-
     }
 
-    private void getMenus()
-    {
+    private void getMenus() {
         final String category_id = getIntent().getStringExtra("category_id");
         client.addHeader("Authorization", "Bearer " + Datas.getAuthorizationKey(this));
         Log.d("=====++++++", URLS.getMenuByCategoryUrl(category_id));
@@ -90,7 +80,7 @@ public class MenuActivity extends AppCompatActivity {
 
                 String response = new String(responseBody);
                 Log.d("---------", response);
-                Log.d("-----category_id" , category_id);
+                Log.d("-----category_id", category_id);
 
                 try {
                     JSONObject motherObj = new JSONObject(response);
@@ -127,7 +117,7 @@ public class MenuActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 showToast("Added to list");
                                 MenuItem selectedMenu = menuItems[itemIndex];
-                                Order order = new Order(selectedMenu.getMenu_id(), quantity.getText().toString() , selectedMenu);
+                                Order order = new Order(selectedMenu.getMenu_id(), quantity.getText().toString(), selectedMenu);
                                 Datas.addToOrders(MenuActivity.this, order);
                                 dialogInterface.dismiss();
                                 startActivity(new Intent(MenuActivity.this, CategoryActivity.class));
@@ -137,11 +127,6 @@ public class MenuActivity extends AppCompatActivity {
                         addQuantity.show();
                     }
                 });
-
-
-
-
-
 
 
             }

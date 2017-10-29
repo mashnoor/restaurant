@@ -32,6 +32,7 @@ public class ConfirmActivity extends AppCompatActivity {
     AsyncHttpClient client;
     ProgressDialog dialog;
     String orderId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,9 +58,7 @@ public class ConfirmActivity extends AppCompatActivity {
                     JSONObject summaryObj = new JSONObject(reponse).getJSONObject("data").getJSONObject("summary");
                     txtTotalBill.setText("Total Bill : " + summaryObj.getString("net_total"));
                     txtOrderId.setText("Order ID : " + orderId);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     showToast("Some error Occured");
                 }
                 dialog.dismiss();
@@ -78,14 +77,13 @@ public class ConfirmActivity extends AppCompatActivity {
     }
 
     @OnClick(R.id.btnOk)
-    public void okbtn()
-    {
+    public void okbtn() {
 
         finish();
         startActivity(new Intent(ConfirmActivity.this, WelcomeActivity.class));
     }
-    private void showToast(String msg)
-    {
+
+    private void showToast(String msg) {
         Toast.makeText(ConfirmActivity.this, msg, Toast.LENGTH_LONG).show();
     }
 

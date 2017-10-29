@@ -2,13 +2,11 @@ package net.rajit.restaurent.activities;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 
 import com.loopj.android.http.AsyncHttpClient;
@@ -17,14 +15,10 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 import net.rajit.restaurent.R;
 import net.rajit.restaurent.adapters.CategoryAdapter;
 import net.rajit.restaurent.models.Category;
-import net.rajit.restaurent.models.MenuItem;
-import net.rajit.restaurent.utils.ClientGetter;
 import net.rajit.restaurent.utils.Datas;
 import net.rajit.restaurent.utils.Geson;
 import net.rajit.restaurent.utils.URLS;
 
-import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import butterknife.BindView;

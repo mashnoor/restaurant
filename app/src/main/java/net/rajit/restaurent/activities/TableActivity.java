@@ -24,8 +24,8 @@ public class TableActivity extends AppCompatActivity {
         setContentView(R.layout.activity_table);
         ButterKnife.bind(this);
     }
-    public void goCategory(View v)
-    {
+
+    public void goCategory(View v) {
         String tableCode = tableList.getSelectedItem().toString();
         Datas.setTableCode(this, tableCode);
         startActivity(new Intent(this, CategoryActivity.class));

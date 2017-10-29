@@ -16,7 +16,6 @@ import com.orhanobut.logger.Logger;
 
 import net.rajit.restaurent.R;
 import net.rajit.restaurent.utils.Datas;
-import net.rajit.restaurent.utils.Netcheker;
 import net.rajit.restaurent.utils.URLS;
 
 import org.json.JSONObject;
@@ -50,10 +49,10 @@ public class Signin extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("Signing In...");
         /***
-        if (!Datas.getWaiterName(this).equals("null")) {
-            startActivity(new Intent(this, WelcomeActivity.class));
-            finish();
-        }
+         if (!Datas.getWaiterName(this).equals("null")) {
+         startActivity(new Intent(this, WelcomeActivity.class));
+         finish();
+         }
          ***/
 
 
@@ -65,7 +64,6 @@ public class Signin extends AppCompatActivity {
 
     @OnClick(R.id.btnSignin)
     public void signin() {
-
 
 
         String id = waiterID.getText().toString();
