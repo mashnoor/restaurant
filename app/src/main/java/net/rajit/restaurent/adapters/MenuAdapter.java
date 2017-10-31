@@ -6,7 +6,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import net.rajit.restaurent.R;
 import net.rajit.restaurent.models.Category;
@@ -50,8 +53,12 @@ public class MenuAdapter extends BaseAdapter {
         }
         TextView menuName = v.findViewById(R.id.menuName);
         TextView menuPrice = v.findViewById(R.id.menuPrice);
+        ImageView menuImage = v.findViewById(R.id.menuImage);
+
+
 
         MenuItem curr_menu = getItem(i);
+        Glide.with(context).load(curr_menu.getImage()).into(menuImage);
 
         menuName.setText(curr_menu.getName());
         menuPrice.setText(curr_menu.getPrice());

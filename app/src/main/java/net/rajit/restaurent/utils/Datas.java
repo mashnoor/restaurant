@@ -94,4 +94,28 @@ public class Datas {
         Hawk.init(activity).build();
         return Hawk.get("table_code", "null");
     }
+    public static boolean isEdit(Activity activity)
+    {
+        Hawk.init(activity).build();
+        return Hawk.get("is_edit", false);
+    }
+    public static void setIsEdit(Activity activity, boolean val)
+    {
+        Hawk.init(activity).build();
+        Hawk.put("is_edit", val);
+    }
+    public static void setEditOrderId(Activity activity, String id)
+    {
+        Hawk.init(activity).build();
+        Hawk.put("edit_order_id", id);
+    }
+    public static String getEditOrderId(Activity activity)
+    {
+        Hawk.init(activity).build();
+        return Hawk.get("edit_order_id", null);
+    }
+    public static void deleteEditOrderId(Activity activity)
+    {
+        Hawk.delete("edit_order_id");
+    }
 }

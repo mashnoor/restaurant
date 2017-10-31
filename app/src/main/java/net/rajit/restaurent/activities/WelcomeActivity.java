@@ -23,4 +23,8 @@ public class WelcomeActivity extends Activity {
     public void goPlaceOrder(View v) {
         startActivity(new Intent(this, TableActivity.class));
     }
+    public void goPreviousOrders(View v)
+    {
+        startActivity(new Intent(this, PreviousOrders.class));
+    }
 }

@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import net.rajit.restaurent.R;
 import net.rajit.restaurent.models.Category;
 
@@ -51,6 +53,7 @@ public class CategoryAdapter extends BaseAdapter {
         }
         Category curr_category = getItem(i);
         ImageView categoryImage = v.findViewById(R.id.categoryPicture);
+        Glide.with(context).load(curr_category.getImage()).into(categoryImage);
         TextView categoryName = v.findViewById(R.id.categoryName);
         categoryName.setText(curr_category.getCategoryName());
         return v;

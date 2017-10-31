@@ -34,14 +34,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-
+        android:onClick="goPreviousOrders"
         android:text="Previous Orders"
         app:bootstrapBrand="success"
         app:bootstrapSize="lg"
         app:buttonMode="regular"
         app:roundedCorners="true"
         app:showOutline="false" />
-
 
 
 </LinearLayout>

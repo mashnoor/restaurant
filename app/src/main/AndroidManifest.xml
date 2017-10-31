@@ -44,7 +44,6 @@
             android:name=".activities.CategoryActivity"
             android:launchMode="singleInstance" />
         <activity
-
             android:name=".activities.MenuActivity"
             android:label="@string/title_activity_menu"
             android:launchMode="singleInstance" />
@@ -52,6 +51,7 @@
             android:name=".activities.OrdersActivity"
             android:label="OrdersActivity"
             android:launchMode="singleInstance" />
+        <activity android:name=".activities.PreviousOrders"></activity>
     </application>
 
 </manifest>

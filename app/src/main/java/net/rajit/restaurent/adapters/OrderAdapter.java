@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
 import com.beardedhen.androidbootstrap.api.view.BootstrapTextView;
+import com.bumptech.glide.Glide;
 
 import net.rajit.restaurent.R;
 import net.rajit.restaurent.activities.Home;
@@ -19,6 +20,8 @@ import net.rajit.restaurent.utils.Datas;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by Mashnoor on 6/19/17.
@@ -45,6 +48,7 @@ public class OrderAdapter extends ArrayAdapter<Order> {
         TextView foodName = v.findViewById(R.id.txtfood);
         TextView orderInfo = v.findViewById(R.id.txtOrderCosting);
         BootstrapButton btn = v.findViewById(R.id.btnDel);
+        CircleImageView foodimage = v.findViewById(R.id.foodImage);
         final Order currentOrder = getItem(position);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +58,7 @@ public class OrderAdapter extends ArrayAdapter<Order> {
                 OrdersActivity.adapter.notifyDataSetChanged();
             }
         });
+        Glide.with(activity).load(currentOrder.getMenuItem().getImage()).into(foodimage);
 
 
 
