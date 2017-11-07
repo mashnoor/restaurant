@@ -79,7 +79,8 @@ public class OrdersActivity extends AppCompatActivity {
                 addQuantity.setView(workingview);
                 final EditText quantity = workingview.findViewById(R.id.etQty);
                 quantity.requestFocus();
-                quantity.setText(allOrders.get(position).getQuantity());
+                quantity.setText(allOrders.get(position).getQuantity().replace(".00", ""));
+                quantity.setSelection(quantity.getText().length());
 
 
 
@@ -93,6 +94,7 @@ public class OrdersActivity extends AppCompatActivity {
                         Datas.addToOrders(OrdersActivity.this, selectedOrder);
                         allOrders = Datas.getOrders(OrdersActivity.this);
                         adapter.notifyDataSetChanged();
+
                         dialogInterface.dismiss();
                     }
                 });

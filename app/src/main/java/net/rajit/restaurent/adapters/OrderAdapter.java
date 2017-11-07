@@ -5,20 +5,16 @@ import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.beardedhen.androidbootstrap.BootstrapButton;
-import com.beardedhen.androidbootstrap.api.view.BootstrapTextView;
 import com.bumptech.glide.Glide;
 
 import net.rajit.restaurent.R;
-import net.rajit.restaurent.activities.Home;
 import net.rajit.restaurent.activities.OrdersActivity;
 import net.rajit.restaurent.models.Order;
 import net.rajit.restaurent.utils.Datas;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;

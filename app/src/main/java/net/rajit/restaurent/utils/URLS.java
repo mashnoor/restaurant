@@ -12,6 +12,7 @@ public class URLS {
     final public static String ORDER_URL = BASE_URL + "orders";
     final public static String ALL_CATEGORIES = BASE_URL + "categories";
     final public static String GET_ALL_TABLES = BASE_URL + "getalltables";
+    final public static String GET_TABLES = BASE_URL + "tables";
     public static String getMenuByCategoryUrl(String id)
     {
         return BASE_URL + "menus/categorywise/" + id;

@@ -1,6 +1,7 @@
 package net.rajit.restaurent.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
@@ -45,7 +46,7 @@ public class Datas {
         editor.apply();
     }
 
-    public static String getAuthorizationKey(Activity activity) {
+    public static String getAuthorizationKey(Context activity) {
         SharedPreferences prefs = activity.getSharedPreferences(MY_PREFS_NAME, MODE_PRIVATE);
 
         return prefs.getString("auth_key", "null");//"No name defined" is the default value.

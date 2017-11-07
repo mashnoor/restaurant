@@ -1,6 +1,8 @@
 package net.rajit.restaurent.activities;
 
+import android.app.ActivityManager;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import net.rajit.restaurent.R;
+import net.rajit.restaurent.services.OrderNotifService;
 import net.rajit.restaurent.utils.Datas;
 import net.rajit.restaurent.utils.URLS;
 
@@ -39,6 +42,16 @@ public class Signin extends AppCompatActivity {
 
     ProgressDialog dialog;
 
+    private boolean isMyServiceRunning(Class<?> serviceClass) {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+            if (serviceClass.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,8 +59,13 @@ public class Signin extends AppCompatActivity {
         setContentView(R.layout.activity_signin);
         Logger.addLogAdapter(new AndroidLogAdapter());
         ButterKnife.bind(this);
+        if(!isMyServiceRunning(OrderNotifService.class))
+        {
+            startService(new Intent(this, OrderNotifService.class));
+        }
         dialog = new ProgressDialog(this);
         dialog.setMessage("Signing In...");
+
         /***
          if (!Datas.getWaiterName(this).equals("null")) {
          startActivity(new Intent(this, WelcomeActivity.class));
