@@ -37,8 +37,7 @@ public class ConfirmActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+
         ButterKnife.bind(this);
         orderId = getIntent().getExtras().getString("order_id");
         dialog = new ProgressDialog(this);

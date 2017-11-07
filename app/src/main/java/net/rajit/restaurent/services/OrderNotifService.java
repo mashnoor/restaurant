@@ -91,7 +91,7 @@ public class OrderNotifService extends Service {
 
                     Log.d("----Restaurabnt", "Working");
                     try {
-                        Thread.sleep(30000);
+                        Thread.sleep(180000);
 
                     } catch (Exception e) {
                         e.printStackTrace();

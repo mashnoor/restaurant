@@ -3,12 +3,15 @@
 
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:orientation="vertical">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/menuImage"
         android:layout_width="100dp"
+        app:civ_border_color="#FF000000"
+        app:civ_border_width="1dp"
         android:layout_height="100dp"
         android:layout_gravity="center"
         android:src="@drawable/pepsi" />

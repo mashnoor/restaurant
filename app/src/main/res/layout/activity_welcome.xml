@@ -10,16 +10,11 @@
     android:padding="10dp"
     tools:context="net.rajit.restaurent.activities.WelcomeActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:text="Restaurant Name"
-        android:textSize="30sp" />
+
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/btnPlaceOrder"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:onClick="goPlaceOrder"
         android:text="Place A New Order"
@@ -31,7 +26,7 @@
 
     <com.beardedhen.androidbootstrap.BootstrapButton
         android:id="@+id/btnPreviousOrders"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:onClick="goPreviousOrders"

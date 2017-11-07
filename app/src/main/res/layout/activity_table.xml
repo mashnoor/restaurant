@@ -7,6 +7,7 @@
     android:layout_gravity="center"
     android:gravity="center"
     android:orientation="vertical"
+    android:padding="20dp"
     tools:context="net.rajit.restaurent.activities.TableActivity">
 
     <TextView
