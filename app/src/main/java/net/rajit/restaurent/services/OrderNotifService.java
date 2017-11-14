@@ -94,7 +94,7 @@ public class OrderNotifService extends Service {
                         Thread.sleep(180000);
 
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        //e.printStackTrace();
                     }
                 }
             }

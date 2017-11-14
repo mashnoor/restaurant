@@ -26,4 +26,5 @@ public class URLS {
         return  ORDER_URL + "/" + orderId;
     }
     final public static String GET_PREVIOUS_ORDERS = BASE_URL + "orders";
+    final public static String GET_SUMMARy = BASE_URL + "orders/summary";
 }

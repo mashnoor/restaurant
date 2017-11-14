@@ -10,6 +10,23 @@
     android:padding="10dp"
     tools:context="net.rajit.restaurent.activities.WelcomeActivity">
 
+    <TextView
+        android:text="Total Served today: 0"
+        android:id="@+id/tvTotalServed"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="Total amount: 0 TK"
+        android:id="@+id/tvTotalamount"
+        android:gravity="center"
+        android:textSize="20sp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 
     <com.beardedhen.androidbootstrap.BootstrapButton

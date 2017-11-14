@@ -4,6 +4,10 @@ import android.graphics.Color;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 /**
  * Created by Nowfel Mashnoor on 10/31/2017.
  */
@@ -24,7 +28,14 @@ public class PreviousOrder {
     @SerializedName("status")
     private String status;
 
+    @SerializedName("updated_at")
+    private String date;
 
+    public String getDate() {
+
+
+        return date.split(" ")[1];
+    }
 
     public String getId() {
         return id;
@@ -33,41 +44,30 @@ public class PreviousOrder {
     public String getTable_id() {
         return table_id;
     }
-    public int getColor()
-    {
-        if(status.equals("1"))
-        {
+
+    public int getColor() {
+        if (status.equals("1")) {
             return Color.RED;
-        }
-        else if (status.equals("2"))
-        {
+        } else if (status.equals("2")) {
             return Color.BLUE;
-        }
-        else
-        {
+        } else {
             return Color.GREEN;
         }
     }
 
-    public boolean isEditable()
-    {
-        if(status.equals("1") || status.equals("2"))
+    public boolean isEditable() {
+        if (status.equals("1") || status.equals("2"))
             return true;
         return false;
     }
 
     public String getStatus() {
-       if(status.equals("1"))
-       {
-           return "Pending";
-       }
-       else if (status.equals("2"))
-       {
-           return "In Progress";
-       }
-       else
-       {
-           return "Completed";
-       }
+        if (status.equals("1")) {
+            return "Pending";
+        } else if (status.equals("2")) {
+            return "In Progress";
+        } else {
+            return "Completed";
+        }
     }
 }

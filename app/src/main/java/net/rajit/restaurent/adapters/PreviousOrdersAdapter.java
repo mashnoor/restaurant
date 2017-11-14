@@ -54,7 +54,9 @@ public class PreviousOrdersAdapter extends BaseAdapter {
         TextView tvOrderId = v.findViewById(R.id.tvOrderId);
         TextView tvTableCode = v.findViewById(R.id.tvTableCode);
         TextView tvStatus = v.findViewById(R.id.tvStatus);
+        TextView tvTime = v.findViewById(R.id.tvTime);
 
+        tvTime.setText(currOrder.getDate());
         tvOrderId.setText("ID:" + currOrder.getId());
         tvTableCode.setText("Table: " + currOrder.getTable_id());
 
