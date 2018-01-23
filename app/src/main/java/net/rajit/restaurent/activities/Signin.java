@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -17,7 +18,6 @@ import com.orhanobut.logger.AndroidLogAdapter;
 import com.orhanobut.logger.Logger;
 
 import net.rajit.restaurent.R;
-import net.rajit.restaurent.services.OrderNotifService;
 import net.rajit.restaurent.utils.Datas;
 import net.rajit.restaurent.utils.URLS;
 
@@ -42,15 +42,6 @@ public class Signin extends AppCompatActivity {
 
     ProgressDialog dialog;
 
-    private boolean isMyServiceRunning(Class<?> serviceClass) {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-            if (serviceClass.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
 
 
     @Override
@@ -59,10 +50,7 @@ public class Signin extends AppCompatActivity {
         setContentView(R.layout.activity_signin);
         Logger.addLogAdapter(new AndroidLogAdapter());
         ButterKnife.bind(this);
-        if(!isMyServiceRunning(OrderNotifService.class))
-        {
-            startService(new Intent(this, OrderNotifService.class));
-        }
+
         dialog = new ProgressDialog(this);
         dialog.setMessage("Signing In...");
 
@@ -99,6 +87,7 @@ public class Signin extends AppCompatActivity {
         RequestParams params = new RequestParams();
         params.put("username", id);
         params.put("password", passwoed);
+        params.put("token", FirebaseInstanceId.getInstance().getToken());
         client.post(URLS.LOGIN_URL, params, new AsyncHttpResponseHandler() {
             @Override
             public void onStart() {

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "274826702864",
+    "firebase_url": "https://rajit-f3fc0.firebaseio.com",
+    "project_id": "rajit-f3fc0",
+    "storage_bucket": "rajit-f3fc0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:274826702864:android:3dd26e44592e022d",
+        "android_client_info": {
+          "package_name": "net.rajit.restaurent"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "274826702864-so3mdkqa37lq0s881ku6g32slaabcan7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.rajit.restaurent",
+            "certificate_hash": "c23a4e42e47b7fa3a35e2688df5bddef27f75656"
+          }
+        },
+        {
+          "client_id": "274826702864-6jqn4o20iggdq0l2f0buuerqqmf4qmn9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEpx5UikvyLTF5OA5EY2EiP86sRvssqZw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "274826702864-6jqn4o20iggdq0l2f0buuerqqmf4qmn9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

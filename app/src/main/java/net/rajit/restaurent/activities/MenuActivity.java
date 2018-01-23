@@ -108,10 +108,6 @@ public class MenuActivity extends AppCompatActivity {
                         final EditText quantity = workingview.findViewById(R.id.etQty);
                         quantity.requestFocus();
 
-                        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-
-
                         addQuantity.setPositiveButton("Set", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {

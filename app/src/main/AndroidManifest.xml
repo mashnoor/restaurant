@@ -57,10 +57,19 @@
             android:screenOrientation="portrait"
             android:name=".activities.PreviousOrders" />
 
+
         <service
-            android:name=".services.OrderNotifService"
-            android:enabled="true"
-            android:exported="true" />
+            android:name=".services.MyMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <service
+            android:name=".services.MyFirebaseInstance">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
