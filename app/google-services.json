@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "274826702864-c8r95ei458c9k6kblam8ltkgj021skuc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "net.rajit.restaurent",
+            "certificate_hash": "b121bd86634e921252213c8bc5e8a993a5866ed4"
+          }
+        },
+        {
           "client_id": "274826702864-so3mdkqa37lq0s881ku6g32slaabcan7.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {

@@ -83,7 +83,6 @@ public class OrdersActivity extends AppCompatActivity {
                 quantity.setSelection(quantity.getText().length());
 
 
-
                 addQuantity.setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -118,8 +117,7 @@ public class OrdersActivity extends AppCompatActivity {
     }
 
     public void confirmOrder(View v) {
-        if(Datas.isEdit(OrdersActivity.this))
-        {
+        if (Datas.isEdit(OrdersActivity.this)) {
             editOrder();
             return;
         }
@@ -174,8 +172,7 @@ public class OrdersActivity extends AppCompatActivity {
         });
     }
 
-    private void editOrder()
-    {
+    private void editOrder() {
         Log.d("========+++++", Datas.getTableCode(OrdersActivity.this));
         ArrayList<Order> orders = Datas.getOrders(OrdersActivity.this);
         client.addHeader("Authorization", "Bearer " + Datas.getAuthorizationKey(this));

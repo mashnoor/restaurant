@@ -56,8 +56,7 @@ public class PreviousOrders extends AppCompatActivity {
         previousOrderslv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if(!previousOrders[i].isEditable())
-                {
+                if (!previousOrders[i].isEditable()) {
                     Toast.makeText(PreviousOrders.this, "This order is not editable!", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -81,6 +80,7 @@ public class PreviousOrders extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 dialog.dismiss();
                 String response = new String(responseBody);
+                Datas.clearOrders(PreviousOrders.this);
 
                 try {
                     JSONObject motherObj = new JSONObject(response);
@@ -116,6 +116,8 @@ public class PreviousOrders extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 dialog.dismiss();
 
+                Logger.d(error.getMessage());
+                Logger.d(new String(responseBody));
             }
         });
     }

@@ -54,12 +54,12 @@ public class Signin extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("Signing In...");
 
-        /***
+
          if (!Datas.getWaiterName(this).equals("null")) {
          startActivity(new Intent(this, WelcomeActivity.class));
          finish();
          }
-         ***/
+
 
 
     }
@@ -123,6 +123,7 @@ public class Signin extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 Logger.d(new String(responseBody));
+                Logger.d(error.getMessage());
 
             }
         });

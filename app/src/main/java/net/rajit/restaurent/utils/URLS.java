@@ -5,8 +5,9 @@ package net.rajit.restaurent.utils;
  */
 
 public class URLS {
-    final private static String BASE_URL = "http://192.168.1.28/api/";
-    //final private static String BASE_URL = "http://rajitdemos.net/restaurant/public/api/";
+    //final private static String BASE_URL = "http://192.168.1.28/api/";
+    final private static String BASE_URL = "http://rajitdemos.net/restaurant/res/restaurant/public/api/";
+    //final private static String BASE_URL = "http://192.168.0.101:8888/restaurant/public/api/";
     final public static String LOGIN_URL = BASE_URL + "login";
 
     final public static String ORDER_URL = BASE_URL + "orders";

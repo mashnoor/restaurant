@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.orhanobut.logger.AndroidLogAdapter;
+import com.orhanobut.logger.Logger;
 
 import net.rajit.restaurent.R;
 import net.rajit.restaurent.utils.Datas;
@@ -29,19 +31,19 @@ public class WelcomeActivity extends Activity {
     TextView tvtotalServed;
     AsyncHttpClient client;
     ProgressDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
         ButterKnife.bind(this);
+        Logger.addLogAdapter(new AndroidLogAdapter());
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please wait...");
         if (Datas.isAnyPendingOrder(this)) {
             finish();
             startActivity(new Intent(this, OrdersActivity.class));
-        }
-        else
-        {
+        } else {
             client = new AsyncHttpClient();
             client.addHeader("Authorization", "Bearer " + Datas.getAuthorizationKey(this));
             client.get(URLS.GET_SUMMARy, new AsyncHttpResponseHandler() {
@@ -62,9 +64,7 @@ public class WelcomeActivity extends Activity {
                         Log.d("---------Sale", totalSale);
                         tvtotalServed.setText("Total Served today: " + totalSale);
                         tvtotalAmount.setText("Total amount: " + totalAmount + " TK");
-                    }
-                    catch (Exception e)
-                    {
+                    } catch (Exception e) {
                         e.printStackTrace();
 
                     }
@@ -76,6 +76,7 @@ public class WelcomeActivity extends Activity {
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                     dialog.dismiss();
+                    Logger.d(error.getMessage());
                 }
             });
         }
@@ -84,8 +85,13 @@ public class WelcomeActivity extends Activity {
     public void goPlaceOrder(View v) {
         startActivity(new Intent(this, TableActivity.class));
     }
-    public void goPreviousOrders(View v)
-    {
+
+    public void goPreviousOrders(View v) {
         startActivity(new Intent(this, PreviousOrders.class));
+    }
+
+    public void goLogout(View v) {
+        Datas.setWaiterName(this, "null");
+        startActivity(new Intent(this, Signin.class));
     }
 }
