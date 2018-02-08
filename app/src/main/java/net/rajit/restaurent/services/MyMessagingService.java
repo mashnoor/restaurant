@@ -26,8 +26,7 @@ import org.json.JSONObject;
 
 public class MyMessagingService extends FirebaseMessagingService {
 
-    private void showNotification(String title, String msg)
-    {
+    private void showNotification(String title, String msg) {
 
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -46,11 +45,9 @@ public class MyMessagingService extends FirebaseMessagingService {
         mBuilder.setContentIntent(contentIntent);
 
 //Display notification
-        notificationManager.notify(0,mBuilder.build());
+        notificationManager.notify(0, mBuilder.build());
 
     }
-
-
 
 
     @Override
@@ -64,14 +61,14 @@ public class MyMessagingService extends FirebaseMessagingService {
         Log.d("-------", "From: " + remoteMessage.getFrom());
         try {
             JSONObject result = new JSONObject(remoteMessage.getData().get("body"));
-            String msg = "Order ID: " + result.getString("order_id") + " Table ID: " + result.getString("table_id");
+            String msg = "Order ID: " + result.getString("order_id") + " Table: " + result.getString("table_code");
 
-            showNotification("Order Ready", msg);
+            showNotification("Order is ready to serve!", msg);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        Log.d("-------", remoteMessage.getData().get("body"));
+        Logger.d("My Body" + remoteMessage.getData().get("body"));
     }
 
 }

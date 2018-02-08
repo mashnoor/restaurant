@@ -3,6 +3,7 @@ package net.rajit.restaurent.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -42,6 +43,10 @@ public class PreviousOrders extends AppCompatActivity {
     @BindView(R.id.lvPreviousOrders)
     ListView previousOrderslv;
 
+    @BindView(R.id.layoutSwipe)
+    SwipeRefreshLayout layoutSwipe;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +58,7 @@ public class PreviousOrders extends AppCompatActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("Getting data from server...");
         getOrders();
+        registerSwipeListener();
         previousOrderslv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -65,6 +71,16 @@ public class PreviousOrders extends AppCompatActivity {
             }
 
 
+        });
+    }
+
+    private void registerSwipeListener() {
+        layoutSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getOrders();
+                layoutSwipe.setRefreshing(false);
+            }
         });
     }
 
@@ -98,7 +114,6 @@ public class PreviousOrders extends AppCompatActivity {
                         String name = obj.getString("name");
                         MenuItem item = new MenuItem(menuId, code, name, "black", price, image, 1);
 
-
                         Order order = new Order(menuId, quantity, item);
                         Datas.addToOrders(PreviousOrders.this, order);
                     }
@@ -106,7 +121,7 @@ public class PreviousOrders extends AppCompatActivity {
                     startActivity(new Intent(PreviousOrders.this, OrdersActivity.class));
 
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    showToast("Error! Pull down to refresh");
                 }
 
 
@@ -116,10 +131,13 @@ public class PreviousOrders extends AppCompatActivity {
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 dialog.dismiss();
 
-                Logger.d(error.getMessage());
-                Logger.d(new String(responseBody));
+                showToast("Error! Pull down to refresh");
             }
         });
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
 

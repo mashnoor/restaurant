@@ -3,11 +3,13 @@ package net.rajit.restaurent.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -36,6 +38,7 @@ public class CategoryActivity extends AppCompatActivity {
     ProgressDialog dialog;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +51,10 @@ public class CategoryActivity extends AppCompatActivity {
         getCategories();
 
 
+
     }
+
+
 
     private void getCategories() {
         client.addHeader("Authorization", "Bearer " + Datas.getAuthorizationKey(this));
@@ -73,7 +79,8 @@ public class CategoryActivity extends AppCompatActivity {
                     adapter = new CategoryAdapter(getApplicationContext(), categories);
                     categoryGridView.setAdapter(adapter);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    showToast("Error. Pull down to refresh.");
+
                 }
 
 
@@ -83,7 +90,6 @@ public class CategoryActivity extends AppCompatActivity {
                         Category selectedCategory = categories[i];
                         Intent intent = new Intent(CategoryActivity.this, MenuActivity.class);
                         intent.putExtra("category_id", selectedCategory.getCategoryId());
-
                         startActivity(intent);
                     }
                 });
@@ -94,6 +100,7 @@ public class CategoryActivity extends AppCompatActivity {
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
                 dialog.dismiss();
+                showToast("Error. Pull down to refresh.");
 
             }
         });
@@ -102,6 +109,10 @@ public class CategoryActivity extends AppCompatActivity {
     public void goOrders(View v) {
         startActivity(new Intent(this, OrdersActivity.class));
 
+    }
+    private void showToast(String msg)
+    {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
 }

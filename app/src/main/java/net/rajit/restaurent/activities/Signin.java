@@ -1,8 +1,6 @@
 package net.rajit.restaurent.activities;
 
-import android.app.ActivityManager;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -43,7 +41,6 @@ public class Signin extends AppCompatActivity {
     ProgressDialog dialog;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,13 +50,13 @@ public class Signin extends AppCompatActivity {
 
         dialog = new ProgressDialog(this);
         dialog.setMessage("Signing In...");
+        dialog.setCancelable(false);
 
 
-         if (!Datas.getWaiterName(this).equals("null")) {
-         startActivity(new Intent(this, WelcomeActivity.class));
-         finish();
-         }
-
+        if (!Datas.getWaiterName(this).equals("null")) {
+            startActivity(new Intent(this, WelcomeActivity.class));
+            finish();
+        }
 
 
     }
@@ -112,18 +109,19 @@ public class Signin extends AppCompatActivity {
                     } else {
                         showToast("Credentials didn't match");
 
+
                     }
                 } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                    showToast("Error! Try again");
 
+                }
 
             }
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Logger.d(new String(responseBody));
-                Logger.d(error.getMessage());
+                showToast("Error! Try Again");
+                dialog.dismiss();
 
             }
         });

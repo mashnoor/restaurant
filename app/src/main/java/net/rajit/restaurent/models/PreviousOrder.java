@@ -31,6 +31,13 @@ public class PreviousOrder {
     @SerializedName("updated_at")
     private String date;
 
+    @SerializedName("table")
+    private Table table;
+
+    public Table getTable() {
+        return table;
+    }
+
     public String getDate() {
 
 
@@ -56,9 +63,8 @@ public class PreviousOrder {
     }
 
     public boolean isEditable() {
-        if (status.equals("1") || status.equals("2"))
-            return true;
-        return false;
+        return (status.equals("1") || status.equals("2") || status.equals("3") || status.equals("4"));
+
     }
 
     public String getStatus() {

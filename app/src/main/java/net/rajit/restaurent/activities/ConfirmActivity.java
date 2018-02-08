@@ -3,8 +3,8 @@ package net.rajit.restaurent.activities;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,12 +33,25 @@ public class ConfirmActivity extends AppCompatActivity {
     ProgressDialog dialog;
     String orderId;
 
+    @BindView(R.id.layoutSwipe)
+    SwipeRefreshLayout layoutSwipe;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm);
 
         ButterKnife.bind(this);
+        registerSwipeListener();
+        getSummary();
+
+
+
+
+    }
+
+    private void getSummary()
+    {
         orderId = getIntent().getExtras().getString("order_id");
         dialog = new ProgressDialog(this);
         dialog.setMessage("Generating Summary...");
@@ -58,7 +71,7 @@ public class ConfirmActivity extends AppCompatActivity {
                     txtTotalBill.setText("Total Bill : " + summaryObj.getString("net_total"));
                     txtOrderId.setText("Order ID : " + orderId);
                 } catch (Exception e) {
-                    showToast("Some error Occured");
+                    showToast("Something went wrong");
                 }
                 dialog.dismiss();
 
@@ -66,13 +79,23 @@ public class ConfirmActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                showToast("Some error Occured");
+                showToast("Something went wrong");
                 finish();
 
             }
         });
 
+    }
 
+    private void registerSwipeListener()
+    {
+        layoutSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getSummary();
+                layoutSwipe.setRefreshing(false);
+            }
+        });
     }
 
     @OnClick(R.id.btnOk)

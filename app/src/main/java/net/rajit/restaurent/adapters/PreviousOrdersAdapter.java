@@ -20,8 +20,7 @@ public class PreviousOrdersAdapter extends BaseAdapter {
     private final Context context;
     private final PreviousOrder[] previousOrders;
 
-    public PreviousOrdersAdapter(Context context, PreviousOrder[] previousOrders)
-    {
+    public PreviousOrdersAdapter(Context context, PreviousOrder[] previousOrders) {
         this.context = context;
         this.previousOrders = previousOrders;
     }
@@ -42,11 +41,9 @@ public class PreviousOrdersAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup)
-    {
+    public View getView(int i, View view, ViewGroup viewGroup) {
         View v = view;
-        if(v == null)
-        {
+        if (v == null) {
             final LayoutInflater layoutInflater = LayoutInflater.from(context);
             v = layoutInflater.inflate(R.layout.previous_order_row, null);
         }
@@ -58,7 +55,7 @@ public class PreviousOrdersAdapter extends BaseAdapter {
 
         tvTime.setText(currOrder.getDate());
         tvOrderId.setText("ID:" + currOrder.getId());
-        tvTableCode.setText("Table: " + currOrder.getTable_id());
+        tvTableCode.setText("Table: " + currOrder.getTable().getCode());
 
         tvStatus.setText(currOrder.getStatus());
         tvStatus.setTextColor(currOrder.getColor());

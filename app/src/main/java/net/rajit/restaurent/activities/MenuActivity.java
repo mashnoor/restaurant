@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -45,9 +46,12 @@ public class MenuActivity extends AppCompatActivity {
     MenuItem[] menuItems;
     ProgressDialog dialog;
 
+
+
     private void showToast(String msg) {
         Toast.makeText(getApplicationContext(), msg, Toast.LENGTH_LONG).show();
     }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class MenuActivity extends AppCompatActivity {
         dialog.setMessage("Loading Menus...");
         client = new AsyncHttpClient();
         getMenus();
+
 
 
     }
@@ -76,7 +81,6 @@ public class MenuActivity extends AppCompatActivity {
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 dialog.dismiss();
-
 
                 String response = new String(responseBody);
                 Log.d("---------", response);
@@ -97,6 +101,10 @@ public class MenuActivity extends AppCompatActivity {
                 menuGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> adapterView, View view, final int itemIndex, long l) {
+                        if (menuItems[itemIndex].getAvailable() == 0) {
+                            showToast("This item not available today");
+                            return;
+                        }
                         AlertDialog.Builder addQuantity = new AlertDialog.Builder(
                                 MenuActivity.this);
                         LayoutInflater inflater = getLayoutInflater();
@@ -111,9 +119,13 @@ public class MenuActivity extends AppCompatActivity {
                         addQuantity.setPositiveButton("Set", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                if (quantity.getText().toString().trim().isEmpty()) {
+                                    showToast("Quantity can't be empty");
+                                    return;
+                                }
                                 showToast("Added to list");
                                 MenuItem selectedMenu = menuItems[itemIndex];
-                                Order order = new Order(selectedMenu.getMenu_id(), quantity.getText().toString(), selectedMenu);
+                                Order order = new Order(selectedMenu.getMenu_id(), quantity.getText().toString().trim(), selectedMenu);
                                 Datas.addToOrders(MenuActivity.this, order);
                                 dialogInterface.dismiss();
                                 startActivity(new Intent(MenuActivity.this, CategoryActivity.class));

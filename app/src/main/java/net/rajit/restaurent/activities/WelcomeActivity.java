@@ -4,9 +4,11 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -31,6 +33,24 @@ public class WelcomeActivity extends Activity {
     TextView tvtotalServed;
     AsyncHttpClient client;
     ProgressDialog dialog;
+
+    @BindView(R.id.layoutSwipe)
+    SwipeRefreshLayout layoutSwipe;
+
+    private void registerSwipeListener() {
+        layoutSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+                layoutSwipe.setRefreshing(false);
+                recreate();
+            }
+        });
+    }
+
+    private void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +85,7 @@ public class WelcomeActivity extends Activity {
                         tvtotalServed.setText("Total Served today: " + totalSale);
                         tvtotalAmount.setText("Total amount: " + totalAmount + " TK");
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        showToast("Something went wrong!");
 
                     }
                     dialog.dismiss();
@@ -76,9 +96,10 @@ public class WelcomeActivity extends Activity {
                 public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
                     dialog.dismiss();
-                    Logger.d(error.getMessage());
+                    showToast("Error! Pull down to refresh");
                 }
             });
+            registerSwipeListener();
         }
     }
 

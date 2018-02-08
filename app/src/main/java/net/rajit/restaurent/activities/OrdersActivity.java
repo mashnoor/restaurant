@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -51,6 +52,9 @@ public class OrdersActivity extends AppCompatActivity {
     public static ArrayList<Order> allOrders;
     AsyncHttpClient client;
 
+    @BindView(R.id.layoutSwipe)
+    SwipeRefreshLayout layoutSwipe;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +63,7 @@ public class OrdersActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         dialog = new ProgressDialog(this);
         dialog.setMessage("Please Wait...");
+        dialog.setCancelable(false);
         client = new AsyncHttpClient();
         allOrders = Datas.getOrders(this);
 
@@ -166,10 +171,16 @@ public class OrdersActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Logger.d(new String(responseBody));
+
                 dialog.dismiss();
+                showToast("Something went wrong");
             }
         });
+    }
+
+    private void showToast(String msg)
+    {
+        Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
 
     private void editOrder() {
@@ -224,6 +235,10 @@ public class OrdersActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+    }
+
+    public void changeTable(View v) {
+        startActivity(new Intent(this, TableActivity.class));
     }
 
 }
